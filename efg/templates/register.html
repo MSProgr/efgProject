@@ -1,0 +1,70 @@
+{% extends "my_layout.html" %}
+{% block content %}
+<div class="col-md-4 col-sm-4 col-xs-12 col-md-offset-4 col-sm-offset-4" style="margin-top: 3px;">
+	<form method="POST" action="">
+	{{ form.hidden_tag()}}
+	<fieldset class="form-group">
+		<legend> nouveau utilisateur</legend>
+		<div class="input-group"  style="margin-bottom: 5px;">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			{% if form.username.errors %}
+				{{form.username(class="form-control form-control-lg is-invalid")}}
+				<div class="text-feedback">
+					{% for error in form.username.errors %}
+					<span class="text-danger">{{error}}</span>
+					{% endfor %}
+				</div>
+			{% else %}
+				{{form.username(class="form-control form-control-lg",placeholder="Username")}}
+			{% endif %}
+		</div>
+		<div class="input-group"  style="margin-bottom: 5px;">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+			{% if form.email.errors %}
+				{{form.email(class="form-control form-control-lg is-invalid")}}
+				<div class="text-feedback">
+					{% for error in form.email.errors %}
+					<span class="text-danger">{{error}}</span>
+					{% endfor %}
+				</div>
+			{% else %}
+				{{form.email(class="form-control form-control-lg",placeholder="Email")}}
+			{% endif %}
+		</div>
+		<div class="input-group"  style="margin-bottom: 5px;">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			{% if form.password.errors %}
+				{{form.password(class="form-control form-control-lg is-invalid")}}
+				<div class="text-feedback">
+					{% for error in form.password.errors %}
+					<span class="text-danger">{{error}}</span>
+					{% endfor %}
+				</div>
+			{% else %}
+				{{form.password(class="form-control form-control-lg",placeholder="Password")}}
+			{% endif %}
+		</div>
+		<div class="input-group" style="margin-bottom: 5px;">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-lock" ></i></span>
+			{% if form.confirm_password.errors %}
+				{{form.confirm_password(class="form-control form-control-lg is-invalid",placeholder="Confirm Password")}}
+				<div class="text-feedback">
+					{% for error in form.confirm_password.errors %}
+					<span class="text-danger">{{error}}</span>
+					{% endfor %}
+				</div>
+			{% else %}
+				{{form.confirm_password(class="form-control form-control-lg",placeholder="Confirm password")}}
+			{% endif %}
+		</div>
+		<div class="input-group"  style="margin-bottom: 5px;">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+			{{form.profile(class="form-control form-control-label",placeholder="profile de l'utilisateur")}}
+		</div>
+		<div class="form-group">
+			{{form.submit(class="btn btn-default",id="breg")}}
+		</div>
+	</fieldset>
+</form>
+</div>
+{% endblock content %}

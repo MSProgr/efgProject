@@ -1,0 +1,71 @@
+{% extends "my_layout.html" %}
+{% block content %}
+<div class="row">
+	<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3px;">
+		<form method="POST" action="">
+			{{ form.hidden_tag()}}
+			<fieldset class="form-group">
+				<legend>Joindre un nouveau fichier</legend>
+				<div class="form-group" style="margin-bottom: 5px;">
+					{{form.description.label(class="form-control-label")}}
+					{% if form.description.errors %}
+					{{form.description(class="form-control form-control-lg is-invalid")}}
+					<div class="text-feedback">
+						{% for error in form.description.errors %}
+						<span class="text-danger">{{error}}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{form.description(class="form-control form-control-lg",placeholder="description du fichier")}}
+					{% endif %}
+				</div>
+				<div class="input-group" style="margin-bottom: 5px;">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-camera"></i></span>
+					{{form.fichier(class="form-control-file")}}
+					{% if form.fichier.errors %}
+					<div class="text-feedback">
+						{% for error in form.fichier.errors %}
+						<span class="text-danger">{{error}}</span><br/>
+						{% endfor %}
+					</div>			
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{form.submit(class="btn btn-default",id="bsign")}}
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-1" style="margin-top: 3px;">
+		<div class="table-responsive table-hover">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Date</th>
+						<th>Utilisateur</th>
+						<th>fichier</th>
+						<th>Operation</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for dossier in dossiers %}
+						<tr>
+							<td>{{dossier.id}}</td>
+							<td>{{dossier.date_posted}}</td>
+							<td>{{dossier.author.username}}</td>
+							<td><a href="{{url_for('static',filename='fichiers/{{dossier.fichier}}')}}">voir le fichier</a></td>
+							<td>
+								<a href="{{url_for('modifier')}}">modifier</a>
+								<a href="{{url_for('supprimer')}}">supprimer</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			</div
+
+		</div>
+	</div>
+
+	{% endblock content %}

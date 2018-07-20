@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% if title %}
+	<title>EGF-{{title}}</title>
+	{% else %}
+	<title>EGF-SENEGAL</title>
+	{% endif %}
+	<!-- custom-theme -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="E-services Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+	Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- //custom-theme -->
+<!--stylesheet-->
+<link href="{{url_for('static' ,filename='css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all" />
+<link href="{{url_for('static' ,filename='css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="{{url_for('static' ,filename='css/flexslider.css')}}" type="text/css" media="screen" property="" />
+<link rel="stylesheet" href="{{url_for('static' ,filename='css/lightbox.css')}}"> <!-- lightbox css -->
+
+<!--stylesheet-->
+<!-- js -->
+<script src="{{url_for('static' ,filename='js/jquery-1.11.1.min.js')}}"></script>
+
+<!-- //js -->
+<!-- font-awesome-icons -->
+<link href="{{url_for('static' ,filename='css/font-awesome.css')}}" type="text/css" rel="stylesheet"> 
+<!-- //font-awesome-icons -->
+<!--online fonts-->
+<link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,900" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+<!--//online fonts-->
+<style type="text/css">
+	#bsign{
+		border-color: #ac2925;
+	}
+	#bsign:hover{
+		background-color: #c9302c;
+		color: #fff;
+	}
+	#breg{
+		border-color: #ac2925;
+	}
+	#breg:hover{
+		background-color: #c9302c;
+		color: #fff;
+	}
+	#username,#password,#email,#confirm_password,#picture{
+		background-color : rgb(11, 24, 35);;
+		color : white;
+	}
+</style>
+</head>
+<body>
+	<!--Header section starts here-->
+	<nav class="navbar navbar-default ">
+		<div class="container-fluid header-section w3l">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header w3">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand logo w3-layouts" href="index.html">
+					<h1><span class="head w3l"><i class="fa fa-mobile" aria-hidden="true"></i><sup><i class="fa fa-cog" aria-hidden="true"></i></sup></span>EGF</h1>
+				</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse header" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav list w3">
+					<li><a href="{{url_for('index')}}" class="active">Home</a></li>
+					<li><a href="{{url_for('account')}}">Mon Compte</a></li>
+					{% if current_user.is_authenticated %}
+					<li><a href="{{url_for('logout')}}">Se deconnecter</a></li>
+					<li><a href="{{url_for('dossier')}}">Stock</a></li>
+					{% else %}
+					<li><a href="{{url_for('login')}}">Se connecter</a></li>
+					{% endif %}
+				</ul>
+
+				<div class="w3ls-social-icons">
+					<ul class="social-nav model-3d-0 footer-social w3_agile_social two">
+						<li><a href="#" class="facebook">
+							<div class="front"><i class="fa fa-facebook" aria-hidden="true"></i></div>
+							<div class="back"><i class="fa fa-facebook" aria-hidden="true"></i></div></a>
+						</li>
+						<li><a href="#" class="twitter"> 
+							<div class="front"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+							<div class="back"><i class="fa fa-twitter" aria-hidden="true"></i></div></a>
+						</li>
+						<li><a href="#" class="instagram">
+							<div class="front"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+							<div class="back"><i class="fa fa-instagram" aria-hidden="true"></i></div></a>
+						</li>
+						<li><a href="#" class="pinterest">
+							<div class="front"><i class="fa fa-linkedin" aria-hidden="true"></i></div>
+							<div class="back"><i class="fa fa-linkedin" aria-hidden="true"></i></div></a>
+						</li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+		{% for category, message in messages %}
+		<div class="alert alert-{{category}} alert-dismissible col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4" role="alert">
+			{{message}}
+			<a href="#" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</a>
+		</div>
+		{% endfor %}
+		{% endif %}
+		{%endwith%}
+	{% block content %}
+	{% endblock %}
+	<!-- start-smooth-scrolling -->
+	<script type="text/javascript" src="{{url_for('static',filename='js/move-top.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='js/easing.js')}}"></script>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){		
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+			});
+		});
+	</script>
+	<!-- start-smooth-scrolling -->
+	<!-- here stars scrolling icon -->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			/*
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
+				*/
+
+				$().UItoTop({ easingType: 'easeOutQuart' });
+
+			});
+		</script>
+		<script>
+			$(document).ready(function(){
+				$('[data-toggle="tooltip"]').tooltip(); 
+			});
+		</script>
+		<!-- //here ends scrolling icon -->
+		<script src="{{url_for('static',filename='js/bootstrap.js')}}"></script>
+		<script src="{{url_for('static',filename='js/SmoothScroll.min.js')}}"></script>
+	</body>
+	</html>
