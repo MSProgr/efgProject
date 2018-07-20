@@ -10,7 +10,7 @@ from efg.models import User, Dossier
 
 @app.route('/')
 def index():
-	return render_template("index.html")
+	return render_template("index.html",title="Welcome")
 
 @app.route('/login',methods=["GET","POST"])
 def login():
