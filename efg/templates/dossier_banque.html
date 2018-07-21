@@ -1,9 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-<script type="text/javascript" src="my_file.js"></script>
-</body>
-</html>
+{% extends "my_layout.html" %}
+{% block content %}
+<div class="col-md-8 col-sm-8 col-xs-12 col-md-offset-2 col-sm-offset-2" style="margin-top: 3px;">
+	<fieldset>
+		<legend class="text-center">Fichiers mise ligne</legend>
+		<div class="table-responsive table-hover">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Description</th>
+						<th>Date</th>
+						<th>fichier</th>
+						<th>Operations</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for dossier in dossiers %}
+					<tr>
+						<td>{{dossier.id}}</td>
+						<td>{{dossier.description}}</td>
+						<td>{{dossier.date_posted.strftime('%d-%m-%Y')}}</td>
+						<td><a href="{{url_for('static',filename='fichiers/'+dossier.fichier)}}">voir le fichier</a></td>
+						<td><a href="{{url_for('dossier_detail',dossier_id=dossier.id)}}" class="btn btn-warning">détails</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</fieldset>
+</div>
+<hr/>
+{% endblock content %}

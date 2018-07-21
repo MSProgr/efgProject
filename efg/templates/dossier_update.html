@@ -1,0 +1,40 @@
+{% extends "my_layout.html" %}
+{% block content %}
+<div class="col-md-8 col-sm-8 col-sm-offset-2 col-md-offset-2 col-xs-12 panel-body" style="margin-top: 3px; margin-left: 5px;">
+	<form method="POST" action="" enctype="multipart/form-data">
+		{{ form.hidden_tag()}}
+		<fieldset class="form-group">
+			<legend>Modifications concernant le dossier numero {{dossier.id}}</legend>
+			<div class="form-group" style="margin-bottom: 5px;">
+				{{form.description.label(class="form-control-label")}}
+				{% if form.description.errors %}
+				{{form.description(class="form-control form-control-lg is-invalid")}}
+				<div class="text-feedback">
+					{% for error in form.description.errors %}
+					<span class="text-danger">{{error}}</span>
+					{% endfor %}
+				</div>
+				{% else %}
+				{{form.description(class="form-control form-control-lg",placeholder="description du fichier")}}
+				{% endif %}
+			</div>
+			<div class="input-group" style="margin-bottom: 5px;">
+				<span class="input-group-addon"><i class="glyphicon glyphicon-camera"></i></span>
+				{{form.fichier(class="form-control-file")}}
+				{% if form.fichier.errors %}
+				<div class="text-feedback">
+					{% for error in form.fichier.errors %}
+					<span class="text-danger">{{error}}</span><br/>
+					{% endfor %}
+				</div>			
+				{% endif %}
+			</div>
+			<div class="form-group">
+				{{form.submit(class="btn btn-default",id="bsign")}}
+			</div>
+		</fieldset>
+	</form>
+	<a href="{{url_for('dossier')}}">Retour</a>
+</div>
+
+{% endblock content %}

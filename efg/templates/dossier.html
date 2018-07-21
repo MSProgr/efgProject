@@ -1,8 +1,8 @@
 {% extends "my_layout.html" %}
 {% block content %}
-<div class="row">
-	<div class="col-md-3 col-sm-3 col-xs-12" style="margin-top: 3px;">
-		<form method="POST" action="">
+<div class="row" >
+	<div class="col-md-3 col-sm-3 col-xs-12 panel-body" style="margin-top: 3px; margin-left: 5px;">
+		<form method="POST" action="" enctype="multipart/form-data">
 			{{ form.hidden_tag()}}
 			<fieldset class="form-group">
 				<legend>Joindre un nouveau fichier</legend>
@@ -36,7 +36,7 @@
 			</fieldset>
 		</form>
 	</div>
-	<div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-1" style="margin-top: 3px;">
+	<div class="col-md-8 col-sm-8 col-xs-12" style="margin-top: 3px;">
 		<div class="table-responsive table-hover">
 			<table class="table">
 				<thead>
@@ -45,27 +45,55 @@
 						<th>Date</th>
 						<th>Utilisateur</th>
 						<th>fichier</th>
-						<th>Operation</th>
+						<th>Operations</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for dossier in dossiers %}
-						<tr>
-							<td>{{dossier.id}}</td>
-							<td>{{dossier.date_posted}}</td>
-							<td>{{dossier.author.username}}</td>
-							<td><a href="{{url_for('static',filename='fichiers/{{dossier.fichier}}')}}">voir le fichier</a></td>
-							<td>
-								<a href="{{url_for('modifier')}}">modifier</a>
-								<a href="{{url_for('supprimer')}}">supprimer</a>
-							</td>
-						</tr>
+					<tr>
+						<td>{{dossier.id}}</td>
+						<td>{{dossier.date_posted.strftime('%d-%m-%Y')}}</td>
+						<td>{{dossier.author.username}}</td>
+						<td><a href="{{url_for('static',filename='fichiers/'+dossier.fichier)}}">voir le fichier</a></td>
+						<td><a href="{{url_for('dossier_detail',dossier_id=dossier.id)}}" class="btn btn-warning">détails</a></td>
+						<td><a href="{{url_for('dossier_update',dossier_id=dossier.id)}}" class="btn btn-primary">modifier</a></td>
+					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			</div
-
 		</div>
 	</div>
-
-	{% endblock content %}
+</div>
+<div class="row">
+	<div class="col-md-5 col-sm-5 col-xs-12" style="margin-top: 3px;">
+		<fieldset>
+			<legend>Liste des Utilisateurs</legend>
+			<div class="table-responsive table-hover">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Nom utilisateur</th>
+							<th>Email</th>
+							<th>Profile</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for user in users %}
+						<tr>
+							<td>{{user.id}}</td>
+							<td>{{user.username}}</td>
+							<td>{{user.email}}</td>
+							<td>{{user.profile}}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</fieldset>
+	</div>
+	<div class="col-md-2 col-sm-2 col-xs-12">
+		<a href="{{url_for('register')}}"></a>
+	</div>
+</div>
+{% endblock content %}

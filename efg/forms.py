@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, PasswordField, BooleanField, SubmitField,SelectField, TextAreaField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from efg.models import User, Dossier
@@ -49,5 +49,5 @@ class UpdateAccountForm(FlaskForm):
 
 class DossierForm(FlaskForm):
 	description = TextAreaField("Description",validators=[DataRequired(),Length(min=2)])
-	fichier = FileField("Fichier",validators=[DataRequired(),FileAllowed(["pdf"])])
+	fichier = FileField("Fichier",validators=[FileRequired(),FileAllowed(["pdf"])])
 	submit = SubmitField("Envoyer")
