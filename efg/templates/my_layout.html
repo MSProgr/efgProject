@@ -19,11 +19,9 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 <link href="{{url_for('static' ,filename='css/style.css')}}" rel="stylesheet" type="text/css" media="all" />
 <link rel="stylesheet" href="{{url_for('static' ,filename='css/flexslider.css')}}" type="text/css" media="screen" property="" />
 <link rel="stylesheet" href="{{url_for('static' ,filename='css/lightbox.css')}}"> <!-- lightbox css -->
-<link rel="stylesheet" href="{{url_for('static' ,filename='jquery.flash.css')}}">
 <!--stylesheet-->
 <!-- js -->
 <script src="{{url_for('static' ,filename='js/jquery-1.11.1.min.js')}}"></script>
-<script src="{{url_for('static' ,filename='jquery.flash.js')}}"></script>
 
 <!-- //js -->
 <!-- font-awesome-icons -->
@@ -51,6 +49,13 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 	#username,#password,#email,#confirm_password,#picture,#fichier{
 		background-color : rgb(11, 24, 35);;
 		color : white;
+	}
+	#btlink:hover{
+		background-color: #449d44;
+		color: #fff;
+	}
+	#btlink{
+		border-color: #398439;
 	}
 </style>
 </head>
@@ -111,15 +116,12 @@ function hideURLbar(){ window.scrollTo(0,1); } </script>
 		{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
 		{% for category, message in messages %}
-		<!--<div class="alert alert-{{category}} alert-dismissible col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4" role="alert">
+		<div class="alert alert-{{category}} alert-dismissible col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4" role="alert">
 			{{message}}
 			<a href="#" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</a>
-		</div>-->
-		<script type="text/javascript">
-			$.flash('{{message}}');
-		</script>
+		</div>
 		{% endfor %}
 		{% endif %}
 		{%endwith%}

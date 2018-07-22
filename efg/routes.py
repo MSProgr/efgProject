@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template,url_for,flash,redirect, request
 from flask_login import login_user,current_user,logout_user,login_required
 from efg import app,db,bcrypt
-from efg.forms import RegistrationForm, LoginForm, UpdateAccountForm, DossierForm
+from efg.forms import RegistrationForm, LoginForm, UpdateAccountForm, DossierForm, UpdatePasswordForm
 from efg.models import User, Dossier
 
 
@@ -33,7 +33,7 @@ def login():
 def register():
 	if current_user.profile != "admin":
 		flash("Opération non authorisée","danger")
-		return redirect(url_for('index'))
+		return redirect(url_for('account'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
 		pwd = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -41,7 +41,7 @@ def register():
 		db.session.add(user)
 		db.session.commit()
 		flash("Compte crée avec succée. L'utilisateur peut maintenant se connecter", 'success')
-		return redirect(url_for('index'))
+		return redirect(url_for('dossier'))
 	return render_template('register.html',title="register",form=form)
 
 @app.route('/logout')
@@ -93,7 +93,8 @@ def save_fichier(form_fichier):
 @app.route("/dossier/new",methods=["GET","POST"])
 @login_required
 def dossier():
-	dossiers = Dossier.query.all()
+	page = request.args.get("page", default=1, type=int)
+	dossiers = Dossier.query.order_by(Dossier.date_posted.desc()).paginate(page=page,per_page=4)
 	if current_user.profile != "admin":
 		return render_template("dossier_banque.html",dossiers=dossiers)
 	else:
@@ -145,3 +146,18 @@ def dossier_delete(dossier_id):
 	db.session.delete(dossier)
 	db.session.commit()
 	return redirect(url_for("dossier"))
+
+@app.route("/update_password",methods=["GET","POST"])
+@login_required
+def update_password():
+	image_file = url_for('static', filename="profile_pics/"+current_user.image_file)
+	form = UpdatePasswordForm()
+	if form.validate_on_submit():
+		if bcrypt.check_password_hash(current_user.password,form.ancien.data):
+			current_user.password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+			db.session.commit()
+			flash("Veuillez vous reconnecter avec votre nouveau mot de pass","warning")
+			return redirect(url_for('logout'))
+		else:
+			flash("Mot de pass incorrect. Veuillez saisir à nouveau votre mot de pass","warning")
+	return render_template("update_password.html",form=form,image_file=image_file)

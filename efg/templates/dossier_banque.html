@@ -15,7 +15,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for dossier in dossiers %}
+					{% for dossier in dossiers.items %}
 					<tr>
 						<td>{{dossier.id}}</td>
 						<td>{{dossier.description}}</td>
@@ -28,6 +28,18 @@
 			</table>
 		</div>
 	</fieldset>
+	{% for page_num in dossiers.iter_pages() %}
+	{% if page_num %}
+	{% if dossiers.page == page_num %}
+	<a class="btn" style="background-color: #449d44;color: #fff;border-color: #398439;" 
+	href="{{url_for('dossier',page=page_num)}}">{{page_num}}</a>
+	{% else %}
+	<a class="btn" id="btlink"  href="{{url_for('dossier',page=page_num)}}">{{page_num}}</a>
+	{% endif %}
+	{% else %}
+	...
+	{% endif %}
+	{% endfor %}
 </div>
 <hr/>
 {% endblock content %}

@@ -51,7 +51,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{% for dossier in dossiers %}
+						{% for dossier in dossiers.items %}
 						<tr>
 							<td>{{dossier.id}}</td>
 							<td>{{dossier.date_posted.strftime('%d-%m-%Y')}}</td>
@@ -68,12 +68,25 @@
 				</table>
 			</div>
 		</fieldset>
+		{% for page_num in dossiers.iter_pages() %}
+			{% if page_num %}
+				{% if dossiers.page == page_num %}
+					<a class="btn" style="background-color: #449d44;color: #fff;border-color: #398439;" 
+					href="{{url_for('dossier',page=page_num)}}">{{page_num}}</a>
+				{% else %}
+					<a class="btn" id="btlink"  href="{{url_for('dossier',page=page_num)}}">{{page_num}}</a>
+				{% endif %}
+			{% else %}
+				...
+			{% endif %}
+		{% endfor %}
 	</div>
 </div>
+<hr/ style="border-color: #ff1122;">
 <div class="row">
-	<div class="col-md-5 col-sm-5 col-xs-12" style="margin-top: 3px;">
+	<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3 col-sm-offset-3" style="margin-top: 3px;">
 		<fieldset>
-			<legend>Liste des Utilisateurs</legend>
+			<legend class="text-primary" style="text-align: center">Liste des Utilisateurs</legend>
 			<div class="table-responsive table-hover">
 				<table class="table">
 					<thead>
@@ -98,8 +111,8 @@
 			</div>
 		</fieldset>
 	</div>
-	<div class="col-md-2 col-sm-2 col-xs-12">
-		<a href="{{url_for('register')}}"></a>
-	</div>
+</div>
+<div class="col-md-offset-3 col-sm-offset-3" style="margin-top: 3px;">
+	<a href="{{url_for('register')}}">Ajouter un utilisateur</a>
 </div>
 {% endblock content %}

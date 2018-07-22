@@ -51,3 +51,9 @@ class DossierForm(FlaskForm):
 	description = TextAreaField("Description",validators=[DataRequired(),Length(min=2)])
 	fichier = FileField("Fichier",validators=[FileRequired(),FileAllowed(["pdf"])])
 	submit = SubmitField("Envoyer")
+
+class UpdatePasswordForm(FlaskForm):
+	ancien = PasswordField("Ancien",validators=[DataRequired(),Length(min=5)])
+	password = PasswordField("Password",validators=[DataRequired(),Length(min=5)])
+	confirm_password = PasswordField("Password",validators=[DataRequired(),EqualTo('password')])
+	submit = SubmitField("Appliquer les changements")
