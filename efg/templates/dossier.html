@@ -5,7 +5,7 @@
 		<form method="POST" action="" enctype="multipart/form-data">
 			{{ form.hidden_tag()}}
 			<fieldset class="form-group">
-				<legend>Joindre un nouveau fichier</legend>
+				<legend class="text-danger" style="text-align: center">Joindre un nouveau fichier</legend>
 				<div class="form-group" style="margin-bottom: 5px;">
 					{{form.description.label(class="form-control-label")}}
 					{% if form.description.errors %}
@@ -36,32 +36,38 @@
 			</fieldset>
 		</form>
 	</div>
-	<div class="col-md-8 col-sm-8 col-xs-12" style="margin-top: 3px;">
-		<div class="table-responsive table-hover">
-			<table class="table">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Date</th>
-						<th>Utilisateur</th>
-						<th>fichier</th>
-						<th>Operations</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for dossier in dossiers %}
-					<tr>
-						<td>{{dossier.id}}</td>
-						<td>{{dossier.date_posted.strftime('%d-%m-%Y')}}</td>
-						<td>{{dossier.author.username}}</td>
-						<td><a href="{{url_for('static',filename='fichiers/'+dossier.fichier)}}">voir le fichier</a></td>
-						<td><a href="{{url_for('dossier_detail',dossier_id=dossier.id)}}" class="btn btn-warning">détails</a></td>
-						<td><a href="{{url_for('dossier_update',dossier_id=dossier.id)}}" class="btn btn-primary">modifier</a></td>
-					</tr>
-					{% endfor %}
-				</tbody>
-			</table>
-		</div>
+	<div class="col-md-8 col-sm-8 col-xs-12  panel-body" style="margin-top: 3px;">
+		<fieldset>
+			<legend class="text-danger" style="text-align: center">Fichiers en ligne</legend>
+			<div class="table-responsive table-hover">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Date</th>
+							<th>Utilisateur</th>
+							<th>fichier</th>
+							<th>Operations</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for dossier in dossiers %}
+						<tr>
+							<td>{{dossier.id}}</td>
+							<td>{{dossier.date_posted.strftime('%d-%m-%Y')}}</td>
+							<td>{{dossier.author.username}}</td>
+							<td><a href="{{url_for('static',filename='fichiers/'+dossier.fichier)}}">voir le fichier</a></td>
+							<td>
+								<a href="{{url_for('dossier_detail',dossier_id=dossier.id)}}" class="btn btn-warning">détails</a>
+								<a href="{{url_for('dossier_update',dossier_id=dossier.id)}}" class="btn btn-primary">modifier</a>
+								<a href="{{url_for('dossier_delete',dossier_id=dossier.id)}}" class="btn btn-danger">Supprimer</a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</fieldset>
 	</div>
 </div>
 <div class="row">

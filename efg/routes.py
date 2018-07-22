@@ -128,9 +128,20 @@ def dossier_update(dossier_id):
 		fichier_file = save_fichier(form.fichier.data)
 		dossier.fichier = fichier_file
 		db.session.commit()
-		return redirect(url_for('dossier',dossier_id=dossier.id))
+		return redirect(url_for('dossier_detail',dossier_id=dossier.id))
 
 	elif request.method == "GET":
 		form.description.data = dossier.description
 
 	return render_template("dossier_update.html",title="details",dossier=dossier,form=form)
+
+@app.route("/dossier/<int:dossier_id>/delete",methods=["GET"])
+@login_required
+def dossier_delete(dossier_id):
+	if current_user.profile != 'admin':
+		flash("Operation non authorisée",'warning')
+		return redirect(url_for('dossier'))
+	dossier = Dossier.query.get(dossier_id)
+	db.session.delete(dossier)
+	db.session.commit()
+	return redirect(url_for("dossier"))
